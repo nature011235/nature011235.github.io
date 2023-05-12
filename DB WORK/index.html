@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script type="module" src="map.js"></script>
+</head>
+<body>
+    <div class="header">
+        <a href=index.html id="logo">
+            easy go 
+        </a>
+        <div class="header_items">
+            <div>
+                <a href="signin.html" class="hrefitem">會員登入</a>
+            </div>
+            
+        </div>
+    </div>
+    <div class="picdiv">
+        <div class="slideshow">
+            <div class="slide__item fades">
+                <div class="slide__pagenumber">1 / 6</div>
+                <img src="https://www.luxurywatcher.com/uploads/article/2/8/28872/1592366511190.jpg" />
+                <div class="slide__content">Hello page 1</div>
+            </div>
+            <div class="slide__item fades">
+                <div class="slide__pagenumber">2 / 6</div>
+                <img src="https://source.unsplash.com/random/1920x400?sig=2" />
+                <div class="slide__content">Hello page 2</div>
+            </div>
+            <div class="slide__item fades">
+                <div class="slide__pagenumber">3 / 6</div>
+                <img src="https://source.unsplash.com/random/1920x400?sig=3" />
+                <div class="slide__content">Hello page 3</div>
+            </div>
+            <div class="slide__item fades">
+                <div class="slide__pagenumber">4 / 6</div>
+                <img src="https://source.unsplash.com/random/1920x400?sig=4" />
+                <div class="slide__content">Hello page 4</div>
+            </div>
+            <a id="prev" class="slide__arraw slide__arraw--prev"> ❮ </a>
+            <a id="next" class="slide__arraw slide__arraw--next"> ❯ </a>
+            <div class="slide__dot">
+                <div class="dot" data-value="1"></div>
+                <div class="dot" data-value="2"></div>
+                <div class="dot" data-value="3"></div>
+                <div class="dot" data-value="4"></div>
+            </div>
+        </div>
+    </div>
+ 
+    <div id="menu">
+        <button class="menubutton" >電動機車充電站</button>
+        <button class="menubutton" onclick="window.location.href='https://www.example.com';">台南市加油站</button>
+        <button class="menubutton" onclick="window.location.href='https://www.example.com';">Gogoro電池站</button>
+        <button class="menubutton" onclick="window.location.href='https://www.example.com';">測速照相點</button>
+        <button class="menubutton" >會員專區</button>
+    </div>
+    <div id="maincontent">
+        <div>
+            <div id="map">
+                
+            </div>
+            <div id="undermap">
+                <input type="text" id="search-box" placeholder="請輸入地址或地點">
+                <button id="search-btn">搜尋</button>
+            </div>
+        </div>
+        
+    </div>
+
+    <div style="height: 2000px;">
+
+    </div>
+    
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_lQPUQDubZ06Q29mgzvPQLxMB5zP6cxs&callback=initMap&v=weekly&libraries=places"
+      defer
+    ></script>
+    <script src="index.js"></script>
+</body>
+</html>
