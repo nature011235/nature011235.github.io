@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="signin.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="login_card" >
+        <h2>Log in</h2>
+        
+
+        <form  class="login_form">
+            <input type="text"  placeholder="Username">
+            <input type="password"  placeholder="Password">
+            <button id='login' type="submit">Log in</button>
+            <button id='signup'onclick="event.preventDefault();window.location.href='signup.html';">Sign up</button>
+        </form>
+
+    </div>
+
+
+
+    <div class="container">
+        <a href="index.html" class="hrefitem">easy go</a>
+    </div>
+    <script>
+        // const login_form=document.getElementsByClassName("login_form")[0];
+        // login_form.addEventListener("submit", function(event) {
+        // event.preventDefault();  // 防止表單的自動提交
+        // window.location.href = 'index.html';  // 導向指定的 URL
+        // this.submit();  // 提交表單
+        // });
+        // console.log(login_form)
+        const login=document.getElementById("login");
+        login.addEventListener("click", function(event) {
+        event.preventDefault();  // 防止表單的自動提交
+        window.location.href = 'index.html';  // 導向指定的 URL
+        this.submit();  // 提交表單
+        });
+        console.log(login_form)
+    </script>
+</body>
+</html>
