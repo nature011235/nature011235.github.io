@@ -4,7 +4,7 @@ button[4].addEventListener('click',function(){
     maincontent.style.justifyContent='center';
     maincontent.innerHTML=`<p style="text-align: center;">請先登入<a href="signin.html" style="color: aqua; text-decoration: none;">會員</a></p>`;
 })
-console.log(button[0])
+
 
 window.onload = function () {
   let slideIndex = 1;
@@ -52,3 +52,4 @@ window.onload = function () {
     dots[slideIndex - 1].className += " active";
   }
 };
+

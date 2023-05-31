@@ -12,11 +12,11 @@
         <h2>Log in</h2>
         
 
-        <form  class="login_form">
-            <input type="text"  placeholder="Username">
-            <input type="password"  placeholder="Password">
-            <button id='login' type="submit">Log in</button>
-            <button id='signup'onclick="event.preventDefault();window.location.href='signup.html';">Sign up</button>
+        <form  class="login_form" action="/submit" method="POST">
+            <input type="text"  placeholder="Username" name="username">
+            <input type="password"  placeholder="Password" name='password'>
+            <input  id='login' class='butt' type="submit" value="Log in"></button>
+            <button id='signup' class='butt' onclick="event.preventDefault();window.location.href='signup.html';">Sign up</button>
         </form>
 
     </div>
