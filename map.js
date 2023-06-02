@@ -1,4 +1,49 @@
-
+// var data = {
+//   "informations": [
+//     {
+//       "address": "宜蘭縣 三星鄉 三星路5段39號",
+//       "name": "泉興機車行"
+//     },
+//     {
+//       "address": "宜蘭縣 宜蘭市 泰山路240號",
+//       "name": "元凱機車行"
+//     },
+//     {
+//       "address": "金門縣 金湖鎮 市港路40號",
+//       "name": "永慶機車行"
+//     },
+//     {
+//       "address": "臺東縣 太麻里鄉 多良村大溪路110-3號1樓",
+//       "name": "鎮山機車行"
+//     },
+//     {
+//       "address": "臺東縣 台東巿 豐榮路271號",
+//       "name": "高盛車業"
+//     }
+//   ],
+//   "positions": [
+//     {
+//       "latitude": 24.6659191,
+//       "longitude": 121.651767
+//     },
+//     {
+//       "latitude": 24.751336,
+//       "longitude": 121.737675
+//     },
+//     {
+//       "latitude": 24.4369503,
+//       "longitude": 118.410629
+//     },
+//     {
+//       "latitude": 22.4806529,
+//       "longitude": 120.9429404
+//     },
+//     {
+//       "latitude": 22.7519484,
+//       "longitude": 121.1337971
+//     }
+//   ]
+// };
 
 function initMap() {
   console.log(google); // 確認 google 物件是否已經定義
@@ -86,6 +131,36 @@ function initMap() {
       }
     });
   });
+
+  // var informationList = document.getElementById('information-list');
+
+  // var markers = []; // 儲存所有標記的陣列
+
+  // var showInfoBtn = document.getElementById('show-info-btn');
+  // showInfoBtn.addEventListener('click', function() {
+  //   // 顯示資訊列表
+  //   informationList.style.display = 'block';
+  //   for (var i = 0; i < data.informations.length; i++) {
+  //     var information = data.informations[i];
+  //     var position = data.positions[i];
+
+  //   // Create information div
+  //     var infoDiv = document.createElement('div');
+  //     infoDiv.innerHTML = '<h3>' + information.name + '</h3>' +
+  //       '<p>地址: ' + information.address + '</p>';
+
+  //   // Append information div to information list
+  //     informationList.appendChild(infoDiv);
+
+  //   // Create marker
+  //     var marker = new google.maps.Marker({
+  //       position: { lat: position.latitude, lng: position.longitude },
+  //       map: map
+  //     });
+
+  //     markers.push(marker); // 將標記加入陣列
+  //   }
+  // });
 }
 
 window.initMap = initMap;
