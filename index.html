@@ -112,9 +112,6 @@
                 };
 
                 marker.addListener("click", function() {
-                    // 在这里处理点击事件，例如显示相关信息
-                    const information = data.informations[0]; // 只获取第一个信息对象
-
                     // 清空其他标记的信息
                     markers.forEach(marker => {
                         if (marker !== this) {
@@ -123,7 +120,7 @@
                     });
 
                     // 将信息显示在标记上
-                    const labelText = `${information.address}, ${information.id}, ${information.name}`;
+                    const labelText = `${information.address} , ${information.name}`;
                     this.setLabel({
                         ...customLabel,
                         text: labelText
@@ -177,20 +174,31 @@
                 position: { lat: position.latitude, lng: position.longitude },
                 map: map
                 });
+                const customLabel = {
+                    color: '#2e648c', // 文本颜色
+                    fontWeight: 'bold', // 文本粗细
+                    fontSize: '14px', // 文本大小
+                    text: {
+                        backgroundColor: '#ffffff', // 背景颜色
+                        borderRadius: '5px', // 边框圆角半径
+                        padding: '5px 10px' // 内边距
+                    }
+                };
+
                 marker.addListener("click", function() {
-                    // 在這裡處理點擊事件，例如顯示相關資訊
-                    // 使用console.log作為示例，您可以根據需求更改為其他方式顯示資訊
-                     // 只获取第一个信息对象
-                    console.log(information);
+                    // 清空其他标记的信息
                     markers.forEach(marker => {
                         if (marker !== this) {
-                            marker.setLabel(""); // 清除标记的文本
+                            marker.setLabel(null); // 清除标记的文本
                         }
                     });
 
                     // 将信息显示在标记上
-                    const labelText = `${information.address}, ${information.id}, ${information.name}`;
-                    this.setLabel(labelText);      
+                    const labelText = `${information.address} , ${information.name}`;
+                    this.setLabel({
+                        ...customLabel,
+                        text: labelText
+                    }); // 将自定义标签设置为标记的文本
                 });
                 const information = data.informations[i];
                 i++;

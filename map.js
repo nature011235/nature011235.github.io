@@ -1,166 +1,207 @@
-// var data = {
-//   "informations": [
-//     {
-//       "address": "宜蘭縣 三星鄉 三星路5段39號",
-//       "name": "泉興機車行"
-//     },
-//     {
-//       "address": "宜蘭縣 宜蘭市 泰山路240號",
-//       "name": "元凱機車行"
-//     },
-//     {
-//       "address": "金門縣 金湖鎮 市港路40號",
-//       "name": "永慶機車行"
-//     },
-//     {
-//       "address": "臺東縣 太麻里鄉 多良村大溪路110-3號1樓",
-//       "name": "鎮山機車行"
-//     },
-//     {
-//       "address": "臺東縣 台東巿 豐榮路271號",
-//       "name": "高盛車業"
-//     }
-//   ],
-//   "positions": [
-//     {
-//       "latitude": 24.6659191,
-//       "longitude": 121.651767
-//     },
-//     {
-//       "latitude": 24.751336,
-//       "longitude": 121.737675
-//     },
-//     {
-//       "latitude": 24.4369503,
-//       "longitude": 118.410629
-//     },
-//     {
-//       "latitude": 22.4806529,
-//       "longitude": 120.9429404
-//     },
-//     {
-//       "latitude": 22.7519484,
-//       "longitude": 121.1337971
-//     }
-//   ]
-// };
+var markers = [];
+var map;
+var i = 0;
+function getDataWithInput(table) {
+    var input1 = document.getElementById('County').value;
+    var input2 = document.getElementById('district').value;
+    getData(table, input1, input2);
+}
+function getData(table, input1, input2) {
+    // 使用AJAX或其他方式向後端發送請求並傳遞table值
+    // 在這裡可以使用AJAX函式庫（例如jQuery的$.ajax()函式）或原生的fetch API等方法
+    // 下面是一個使用fetch API的示例：
+    fetch("/get_data/" + table  + "/" + input1 + " " + input2, {
+    method: "GET",
+    // 可以根據需要設定其他請求選項，例如標頭或內容類型
+    })
+    .then(response => response.json())
+    .then(data => {
+    // 在这里处理后端返回的数据
+    // 假设数据是一个数组，每个元素都是包含需要显示的字段的对象
+    // 在这里，我们假设有一个id为 "result-container" 的 HTML 元素作为显示结果的容器
+    const positions = data.positions;
+    const resultContainer = document.getElementById("result-container");
+    resultContainer.innerHTML = ""; // 清空容器内容
+
+    // 遍历数据并将其显示在网页上
+    data.informations.forEach(item => {
+        const listItem = document.createElement("li");
+        const value = Object.values(item).join(', '); // 将对象的值组合成字符串
+        listItem.textContent = value;
+        resultContainer.appendChild(listItem);
+    });
+
+    markers.forEach(marker => marker.setMap(null));
+    markers.length = 0;
+
+    data.positions.forEach(position => {
+    const marker = new google.maps.Marker({
+        position: { lat: position.latitude, lng: position.longitude },
+        map: map
+        });
+        const customLabel = {
+            color: '#2e648c', // 文本颜色
+            fontWeight: 'bold', // 文本粗细
+            fontSize: '14px', // 文本大小
+            text: {
+                backgroundColor: '#ffffff', // 背景颜色
+                borderRadius: '5px', // 边框圆角半径
+                padding: '5px 10px' // 内边距
+            }
+        };
+
+        marker.addListener("click", function() {
+            // 清空其他标记的信息
+            markers.forEach(marker => {
+                if (marker !== this) {
+                    marker.setLabel(null); // 清除标记的文本
+                }
+            });
+
+            // 将信息显示在标记上
+            const labelText = `${information.address} , ${information.name}`;
+            this.setLabel({
+                ...customLabel,
+                text: labelText
+            }); // 将自定义标签设置为标记的文本
+        });
+        const information = data.informations[i];
+        i++;
+    markers.push(marker); // 将标记加入数组
+    });
+    })
+    .catch(error => {
+    console.error("Error:", error);
+    });
+}
+
+function getDataWithInput1(table) {
+    var input1 = document.getElementById('County').value;
+    var input2 = document.getElementById('district').value;
+    getData1(table, input1, input2);
+}
+function getData1(table, input1, input2) {
+    // 使用AJAX或其他方式向後端發送請求並傳遞table值
+    // 在這裡可以使用AJAX函式庫（例如jQuery的$.ajax()函式）或原生的fetch API等方法
+    // 下面是一個使用fetch API的示例：
+    fetch("/get_data/" + table  + "/" + input1 + input2, {
+    method: "GET",
+    // 可以根據需要設定其他請求選項，例如標頭或內容類型
+    })
+    .then(response => response.json())
+    .then(data => {
+    // 在这里处理后端返回的数据
+    // 假设数据是一个数组，每个元素都是包含需要显示的字段的对象
+    // 在这里，我们假设有一个id为 "result-container" 的 HTML 元素作为显示结果的容器
+    const positions = data.positions;
+    const resultContainer = document.getElementById("result-container");
+    resultContainer.innerHTML = ""; // 清空容器内容
+
+    // 遍历数据并将其显示在网页上
+    data.informations.forEach(item => {
+        const listItem = document.createElement("li");
+        const value = Object.values(item).join(', '); // 将对象的值组合成字符串
+        listItem.textContent = value;
+        resultContainer.appendChild(listItem);
+    });
+
+    markers.forEach(marker => marker.setMap(null));
+    markers.length = 0;
+
+    data.positions.forEach(position => {
+    const marker = new google.maps.Marker({
+        position: { lat: position.latitude, lng: position.longitude },
+        map: map
+        });
+        const customLabel = {
+            color: '#2e648c', // 文本颜色
+            fontWeight: 'bold', // 文本粗细
+            fontSize: '14px', // 文本大小
+            text: {
+                backgroundColor: '#ffffff', // 背景颜色
+                borderRadius: '5px', // 边框圆角半径
+                padding: '5px 10px' // 内边距
+            }
+        };
+
+        marker.addListener("click", function() {
+            // 清空其他标记的信息
+            markers.forEach(marker => {
+                if (marker !== this) {
+                    marker.setLabel(null); // 清除标记的文本
+                }
+            });
+
+            // 将信息显示在标记上
+            const labelText = `${information.address} , ${information.name}`;
+            this.setLabel({
+                ...customLabel,
+                text: labelText
+            }); // 将自定义标签设置为标记的文本
+        });
+        const information = data.informations[i];
+        i++;
+    markers.push(marker); // 将标记加入数组
+    });
+    })
+    .catch(error => {
+    console.error("Error:", error);
+    });
+}
 
 function initMap() {
-  console.log(google); // 確認 google 物件是否已經定義
-  console.log(google.maps); // 確認 google.maps 物件是否已經定義
-  // 創建一個新的地圖對象
-  var map = new google.maps.Map(document.getElementById('map'), {
+console.log(google); // 確認 google 物件是否已經定義
+console.log(google.maps); // 確認 google.maps 物件是否已經定義
+// 創建一個新的地圖對象
+map = new google.maps.Map(document.getElementById('map'), {
     zoom: 8, // 地圖縮放級別
-    center: { lat: 25.042029, lng: 121.534846 } // 中心座標
-  });
-  var searchService = new google.maps.places.PlacesService(map);
+    center: { lat: 22.997483, lng: 120.218214 } // 中心座標
+});
+var searchService = new google.maps.places.PlacesService(map);
 
-  document.getElementById('locate-btn').addEventListener('click', function() {
+document.getElementById('locate-btn').addEventListener('click', function() {
     if (navigator.geolocation) {
-      // 獲取地理位置
-      navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    // 獲取地理位置
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
     } else {
-      // 瀏覽器不支援地理位置API
-      alert('瀏覽器不支援地理位置功能');
+    // 瀏覽器不支援地理位置API
+    alert('瀏覽器不支援地理位置功能');
     }
-  });
+});
 
-  function successCallback(position) {
+function successCallback(position) {
     var latitude = position.coords.latitude; // 緯度
     var longitude = position.coords.longitude; // 經度
-
-    // 將緯度和經度填充到表單中
-    document.getElementById('latitude').value = latitude;
-    document.getElementById('longitude').value = longitude;
 
     // 創建使用者的LatLng對象
     var userLocation = new google.maps.LatLng(latitude, longitude);
 
     // 在地圖上標記使用者的位置
     var marker = new google.maps.Marker({
-      position: userLocation,
-      map: map
+    position: userLocation,
+    map: map
     });
 
     // 將地圖中心設置為使用者的位置
     map.setCenter(userLocation);
-  }
+}
 
-  function errorCallback(error) {
+function errorCallback(error) {
     switch (error.code) {
-      case error.PERMISSION_DENIED:
+    case error.PERMISSION_DENIED:
         alert("使用者拒絕提供地理位置");
         break;
-      case error.POSITION_UNAVAILABLE:
+    case error.POSITION_UNAVAILABLE:
         alert("無法獲取地理位置資訊");
         break;
-      case error.TIMEOUT:
+    case error.TIMEOUT:
         alert("獲取地理位置超時");
         break;
-      case error.UNKNOWN_ERROR:
+    case error.UNKNOWN_ERROR:
         alert("發生未知錯誤");
         break;
     }
-  }
-
-  document.getElementById('search-btn').addEventListener('click', function() {
-    var lat = parseFloat(document.getElementById('latitude').value);
-    var lng = parseFloat(document.getElementById('longitude').value);
-    var location = new google.maps.LatLng(lat, lng);
-
-    var request = {
-      location: location,
-      radius: 1000000, // 搜尋半徑，單位為公尺
-      query: lat + ',' + lng,
-      fields: ['name', 'geometry']
-    };
-
-    searchService.textSearch(request, function(results, status) {
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        // 成功搜尋到地點，將地圖移動到該地點位置
-        var place = results[0];
-        map.setCenter(place.geometry.location);
-        // 在地圖上標記出該地點
-        var marker = new google.maps.Marker({
-          map: map,
-          position: place.geometry.location
-        });
-      } else {
-        // 搜尋失敗，提示使用者
-        alert('很抱歉，找不到符合搜尋條件的地點。');
-      }
-    });
-  });
-
-  // var informationList = document.getElementById('information-list');
-
-  // var markers = []; // 儲存所有標記的陣列
-
-  // var showInfoBtn = document.getElementById('show-info-btn');
-  // showInfoBtn.addEventListener('click', function() {
-  //   // 顯示資訊列表
-  //   informationList.style.display = 'block';
-  //   for (var i = 0; i < data.informations.length; i++) {
-  //     var information = data.informations[i];
-  //     var position = data.positions[i];
-
-  //   // Create information div
-  //     var infoDiv = document.createElement('div');
-  //     infoDiv.innerHTML = '<h3>' + information.name + '</h3>' +
-  //       '<p>地址: ' + information.address + '</p>';
-
-  //   // Append information div to information list
-  //     informationList.appendChild(infoDiv);
-
-  //   // Create marker
-  //     var marker = new google.maps.Marker({
-  //       position: { lat: position.latitude, lng: position.longitude },
-  //       map: map
-  //     });
-
-  //     markers.push(marker); // 將標記加入陣列
-  //   }
-  // });
+}
 }
 
 window.initMap = initMap;
