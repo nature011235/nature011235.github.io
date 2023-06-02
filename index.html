@@ -87,8 +87,24 @@
             // 遍历数据并将其显示在网页上
             data.informations.forEach(item => {
                 const listItem = document.createElement("li");
-                const value = Object.values(item).join(', '); // 将对象的值组合成字符串
-                listItem.textContent = value;
+
+                // 創建勾選框元素
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+
+                // 將勾選框和資訊組合成一個容器
+                const container = document.createElement("div");
+                container.appendChild(checkbox);
+
+                // 將資訊轉換為字串並顯示在容器中
+                const value = Object.values(item).join(', '); // 將物件的值組合成字串
+                const textNode = document.createTextNode(value);
+                container.appendChild(textNode);
+
+                // 將容器添加到列表項中
+                listItem.appendChild(container);
+
+                // 將列表項添加到結果容器中
                 resultContainer.appendChild(listItem);
             });
 
@@ -161,8 +177,24 @@
             // 遍历数据并将其显示在网页上
             data.informations.forEach(item => {
                 const listItem = document.createElement("li");
-                const value = Object.values(item).join(', '); // 将对象的值组合成字符串
-                listItem.textContent = value;
+
+                // 創建勾選框元素
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+
+                // 將勾選框和資訊組合成一個容器
+                const container = document.createElement("div");
+                container.appendChild(checkbox);
+
+                // 將資訊轉換為字串並顯示在容器中
+                const value = Object.values(item).join(', '); // 將物件的值組合成字串
+                const textNode = document.createTextNode(value);
+                container.appendChild(textNode);
+
+                // 將容器添加到列表項中
+                listItem.appendChild(container);
+
+                // 將列表項添加到結果容器中
                 resultContainer.appendChild(listItem);
             });
 
