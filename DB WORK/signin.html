@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="signin.css">
     <title>Document</title>
 </head>
@@ -12,11 +13,14 @@
         <h2>Log in</h2>
         
 
-        <form  class="login_form">
-            <input type="text"  placeholder="Username">
-            <input type="password"  placeholder="Password">
-            <button id='login' type="submit">Log in</button>
-            <button id='signup'onclick="event.preventDefault();window.location.href='signup.html';">Sign up</button>
+        <form  id="login_form" class="login_form" action="/login" method="POST">
+            <input type="text"  placeholder="Username" name="username">
+            <input type="password"  placeholder="Password" name='password'>
+            <!-- <input  id='login' class='butt' type="submit" value="Log in"> -->
+            <div id="error_msg">            
+            </div>
+            <button id='login' class='butt' >Log in</button> 
+            <button id='signup' class='butt' onclick="event.preventDefault();window.location.href='signup.html';">Sign up</button>
         </form>
 
     </div>
@@ -26,7 +30,7 @@
     <div class="container">
         <a href="index.html" class="hrefitem">easy go</a>
     </div>
-    <script>
+    <script >
         // const login_form=document.getElementsByClassName("login_form")[0];
         // login_form.addEventListener("submit", function(event) {
         // event.preventDefault();  // 防止表單的自動提交
@@ -34,13 +38,40 @@
         // this.submit();  // 提交表單
         // });
         // console.log(login_form)
-        const login=document.getElementById("login");
-        login.addEventListener("click", function(event) {
+        const login_form=document.getElementById("login_form");
+    
+        login_form.addEventListener("submit", function(event) {
         event.preventDefault();  // 防止表單的自動提交
-        window.location.href = 'index.html';  // 導向指定的 URL
-        this.submit();  // 提交表單
+        
+        var formData = $(this).serialize(); // 序列化表單數據
+        let formElement = this;
+
+        $.ajax({
+            url: '/login',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+            // 在這裡處理後端返回的回應
+                let obj = JSON.parse(response);
+                let account_correct=obj.isLogin;
+                if(!account_correct){
+                    const error_msg=document.getElementById("error_msg")
+                    error_msg.innerText="X 帳號或密碼輸入錯誤"
+                }
+                else{
+                    let usernameinput=formElement.elements.username;
+                    let username=usernameinput.value;
+                    let islog=true
+                    let link='index.html?param1='+encodeURIComponent(username)+"&param2="+encodeURIComponent(islog);
+                    window.location.href=link;
+                }
+            },
+            error: function(error) {
+            console.log(error);
+            }
         });
-        console.log(login_form)
+                });
+        
     </script>
 </body>
 </html>

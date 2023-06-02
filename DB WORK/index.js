@@ -1,10 +1,47 @@
-const button=document.getElementsByClassName('menubutton')
-button[4].addEventListener('click',function(){
-    const maincontent=document.getElementById('maincontent');
-    maincontent.style.justifyContent='center';
-    maincontent.innerHTML=`<p style="text-align: center;">請先登入<a href="signin.html" style="color: aqua; text-decoration: none;">會員</a></p>`;
-})
-console.log(button[0])
+// const button=document.getElementsByClassName('menubutton')
+// button[4].addEventListener('click',function(){
+//     const maincontent=document.getElementById('maincontent');
+//     maincontent.style.justifyContent='center';
+//     maincontent.innerHTML=`<p style="text-align: center;">請先登入<a href="signin.html" style="color: aqua; text-decoration: none;">會員</a></p>`;
+// })
+var queryString = window.location.search;
+  
+  // 使用 URLSearchParams 解析查詢字串
+var params = new URLSearchParams(queryString);
+  
+  // 取得參數值
+
+let login=false
+let username=params.get('param1')
+login=params.get('param2')
+console.log(login)
+if(login){
+  const usernameloc=document.getElementById("usernameloc")
+  usernameloc.innerText=username.substring(0,8)+"...";
+  usernameloc.addEventListener('click', function(event) {
+    event.preventDefault(); // 取消點擊事件的預設行為
+  });
+  const innerlist=document.querySelector(".innerlist")
+  console.log(innerlist)
+  const usernameloclist=document.getElementById("usernameloclist")
+  usernameloclist.addEventListener('mouseover', function() {
+    // 鼠標移入時的樣式設置
+    innerlist.style.display='block'
+  });
+  
+  usernameloclist.addEventListener('mouseout', function() {
+    // 鼠標移出時的樣式設置
+    innerlist.style.display='none'
+  });
+  const logo=document.getElementById("logo")
+  logo.addEventListener('click', function(event) {
+    event.preventDefault(); // 取消點擊事件的預設行為
+    let link='index.html?param1='+encodeURIComponent(username)+"&param2="+encodeURIComponent(login);
+    window.location.href=link;
+  });
+
+}
+
 
 window.onload = function () {
   let slideIndex = 1;
@@ -52,3 +89,4 @@ window.onload = function () {
     dots[slideIndex - 1].className += " active";
   }
 };
+

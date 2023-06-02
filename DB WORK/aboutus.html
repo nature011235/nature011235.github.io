@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ 
+    <style>
+        body,html{
+            padding: 0;
+            margin:0;
+            width: 100%;
+            background-color: white;
+            height:100%;
+            box-sizing: border-box;
+        }
+
+ 
+    </style>
+</head>
+<body>
+    <div style="width: 100%;
+                height:100%;
+                padding: 0;
+                margin:0;" >
+        <img id="myImage" src="https://media.istockphoto.com/id/1334434982/photo/scary-ghost-on-dark-background.jpg?s=612x612&w=0&k=20&c=PXD8xtKBlpmgYeSQslTCIUnqsjpVzfY5kaWgRZwHEE4=" alt="xxx" 
+        style="
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin:0;
+            object-fit: cover;
+            vertical-align: middle;
+            transition: 0.5s;
+            position: absolute; 
+            
+            border: 0;
+            display: none;
+            
+            ">
+    </div>
+    <script>
+        setTimeout(function() {
+            var image = document.getElementById("myImage");
+            image.style.display = "block"; // 顯示圖片
+    
+        }, 2000); // 3秒後執行
+      
+    </script>
+</body>
+</html>
