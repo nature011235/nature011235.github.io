@@ -68,7 +68,13 @@ if(login){
 
 
 }
-
+const member_title=document.getElementById("member_title")
+console.log(username)
+if(username!==null&&username!="null")
+{   
+    member_title.innerText=''
+    member_title.innerText="Hello!"+username
+}
 const logout=document.getElementById("logout")
 logout.addEventListener("click",function(event){
   event.preventDefault();

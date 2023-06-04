@@ -14,7 +14,7 @@
         
 
         <form  id="login_form" class="login_form" action="/login" method="POST">
-            <input type="text"  placeholder="Username" name="username">
+            <input type="text"  placeholder="Email" name="email">
             <input type="password"  placeholder="Password" name='password'>
             <!-- <input  id='login' class='butt' type="submit" value="Log in"> -->
             <div id="error_msg">            
@@ -59,7 +59,7 @@
                     error_msg.innerText="X 帳號或密碼輸入錯誤"
                 }
                 else{
-                    let usernameinput=formElement.elements.username;
+                    let usernameinput=formElement.elements.email;
                     let username=usernameinput.value;
                     let islog=true
                     let link='index.html?param1='+encodeURIComponent(username)+"&param2="+encodeURIComponent(islog);

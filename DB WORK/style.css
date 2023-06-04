@@ -6,6 +6,8 @@ body{
     background-color: white;
     padding: 0;
     margin: 0;
+    
+    
    
 }
 
@@ -71,7 +73,7 @@ ul.drop-down-menu > li {
   left: -1px;
   top: 100%;
   width: 100%;
-  box-shadow: 0px 5px 5px rgb(172, 165, 165);
+  box-shadow: 0px 3px 3px rgb(172, 165, 165);
   background-color: white;
   border: #adadad56 2px solid;
   margin:0 auto;
@@ -113,15 +115,16 @@ ul.drop-down-menu > li {
 
 
 #menu{
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0);
     margin:0;
     padding:0;
-    width: 80%;
+    width: 90%;
     display: flex;
     justify-content: space-around;
     margin: 0 auto;
     margin-top: 100px;
     margin-bottom: 100px;
+    border-radius: 0.5rem;
     
     
 }
@@ -147,12 +150,13 @@ ul.drop-down-menu > li {
 .picdiv{
     width: auto;
     margin:0;
-    background-color: black;
+    background-color: rgba(0, 0, 0, 1);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 70%;
     margin-top: 70px;
+    
 }
 
 
@@ -262,29 +266,90 @@ ul.drop-down-menu > li {
     }
   }
 
-  #map{
-    height:700px;
-    width: 700px;
-    
+#map{
+  height:700px;
+  width: 700px !important;
+  
+  
+  
 
-  }
+}
+#map_protect{
+  height: 700px;
+  width: 700px;
+  flex-grow: 1;
+  margin-right:  50px;
+}
 
-  #undermap{
-    margin-left: 5%;
-  }
+#besidemap{
+  width: calc(100% - 750px);
+  height: 700px;
+}
+#search input{
+  border: 2px solid #ebebeb;
+  font-family: inherit;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 0.25rem;
+  margin: 0;
+  width: 35%;
 
+  
+}
+#search button{
+  margin:0;
+  font-size: 20px;
+  cursor: pointer;
+  width: 100px;
+  border: none;
+  flex-grow: 1;
+  margin-left:  10px; 
+  background-color: white;
+  border-radius: 0.5rem;
+}
+#search button:hover{
+  background-color: #2667bc;
+  color: #fff;
 
+}
+#search input:hover{
+  border: 2px solid black;
+}
+#search{
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display:inline-flex ;
+  margin-bottom: 20px;
+  
+}
 #maincontent{
   display: flex;
-  padding-top:50px;
-  padding: 5%;
-  width: 80%;
+  position: relative;
+  padding:5% 3%;
+  width: 90%;
   margin:0 auto;
   border: #00CACA solid 5px;
   border-radius: 3rem;
   box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.1);
+  
   
 }
+
+#result-container{
+  overflow: scroll;
+  height: calc(100% - 67px);
+  width: 100%;
+}
+
+#result-container li{
+  list-style:none;
+  background-color: white;
+  box-shadow: 0 0 4px rgb(172, 165, 165);
+  width: 100%;
+}
+
 
 #member_menu{
   border: #adadad27 solid 3px;
@@ -310,18 +375,48 @@ ul.drop-down-menu > li {
 }
 
 #member_content{
-  border: #adadad27 solid 3px;
-  height: 700px;
-  border-radius: 0.5rem;
-  box-shadow: 0 0 3px rgb(172, 165, 165);
-  width: 77%;
-  padding: 20px;
-  box-sizing: border-box;
-  text-align: center;
-  
+  overflow: scroll;
+  height: calc(100% - 114px);
+  width: 100%;
 }
 
+#member_title{
+  width: 100%;
+  box-sizing: border-box;
+  height: 47px;
+  margin-bottom: 1px;
+  background-color: rgba(58, 73, 73,0.8);
+  color: white;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+#member_func{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.search_button{
+  height: 47px;
+  margin: 0;
+  margin-right: 1%;
+  padding:0;
+  background-color: white;
+  flex:1;
+  cursor: pointer;
+  border: none;
+  background-color: white;
+  border-radius: 0.5rem;
+  font-size: 20px;
+}
+.search_button:last-child{
+  margin: 0;
+}
+.search_button:hover{
+  background-color: #2667bc;
+  color: #fff;
 
-#member_content span{
-  vertical-align:middle;
 }
