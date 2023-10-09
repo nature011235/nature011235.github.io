@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- <script type="module" src="map.js"></script> -->
 </head>
 <body>
@@ -46,6 +47,14 @@
                 <div class="slide__pagenumber">4 / 4</div>
                 <img src="https://plus.unsplash.com/premium_photo-1661963005592-182d602c6a3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" />
             </div>
+            <div class="slide__item fades">
+                <div class="slide__pagenumber">5 / 6</div>
+                <img src="ghost.png" />
+            </div>
+            <div class="slide__item fades">
+                <div class="slide__pagenumber">6 / 6</div>
+                <img src="ghost1.png" />
+            </div>
             <a id="prev" class="slide__arraw slide__arraw--prev"> ❮ </a>
             <a id="next" class="slide__arraw slide__arraw--next"> ❯ </a>
             <div class="slide__dot">
@@ -53,24 +62,27 @@
                 <div class="dot" data-value="2"></div>
                 <div class="dot" data-value="3"></div>
                 <div class="dot" data-value="4"></div>
+                <div class="dot" data-value="5"></div>
+                <div class="dot" data-value="6"></div>
             </div>
         </div>
     </div>
     <div id="menu">
-        <button class="menubutton" >電動機車充電站</button>
-        <button class="menubutton" onclick="window.location.href='https://www.example.com';">維修站</button>
-        <button class="menubutton" onclick="window.location.href='https://www.example.com';">台南市加油站</button>
-        <button class="menubutton" onclick="window.location.href='https://www.example.com';">Gogoro電池站</button>
-        <button class="menubutton" onclick="window.location.href='https://www.example.com';">測速照相點</button>
+        <button class="menubutton" onclick="getDataWithInput('charging_point')">電動機車充電站</button>
+        <button class="menubutton" onclick="getDataWithInput('maintainance_station')">維修站</button>
+        <button class="menubutton" onclick="getDataWithInput1('gas_station')">台南市加油站</button>
+        <button class="menubutton" >Gogoro電池站</button>
+        <button class="menubutton" onclick="getDataWithInput('speed_limit')">測速照相點</button>
     </div>
     <script>
         var markers = [];
         var map;
         var i = 0;
+        let v=0;
+        let b=0;
         function getDataWithInput(table) {
-            var input1 = document.getElementById('County').value;
-            var input2 = document.getElementById('district').value;
-            getData(table, input1, input2);
+
+            getData(table, '', '');
         }
         function getData(table, input1, input2) {
             // 使用AJAX或其他方式向後端發送請求並傳遞table值
@@ -86,23 +98,47 @@
             // 假设数据是一个数组，每个元素都是包含需要显示的字段的对象
             // 在这里，我们假设有一个id为 "result-container" 的 HTML 元素作为显示结果的容器
             const positions = data.positions;
-            const resultContainer = document.getElementById("result-container");
+            const resultContainer = document.getElementById("member_content");
             resultContainer.innerHTML = ""; // 清空容器内容
+            let member_favlist;
+            var i_list=[];
+            var fav = {
+                    "url": "http://127.0.0.1:5000/selectfavorite?email="+username,
+                    "method": "POST",
+                    "timeout": 0,
+                    };
 
-            // 遍历数据并将其显示在网页上
-            data.informations.forEach(item => {
-                const listItem = document.createElement("li");
+                    $.ajax(fav).done(function (response) {
+                      
+                        let obj=JSON.parse(response)
+                        member_favlist=obj.isSelectFavorite;
+                        console.log(member_favlist)
                 
-
-                const value = Object.values(item).join(', '); // 将对象的值组合成字符串
-                listItem.textContent = value;
+                data.informations.forEach(item => {
+                 
+                let locid=item.id
+                if (member_favlist.includes(locid)) {
+                    const listItem = document.createElement("li");
+                    const value = Object.values(item).join(', '); // 将对象的值组合成字符串
+                    i_list.push(b);
+                    
+                listItem.appendChild(document.createTextNode(value));
                 resultContainer.appendChild(listItem);
+                } 
+                b+=1;
             });
 
+         
+                   
+            // 遍历数据并将其显示在网页上
+                    console.log(i_list);
             markers.forEach(marker => marker.setMap(null));
             markers.length = 0;
-
+           
             data.positions.forEach(position => {
+                console.log(v)
+                if(i_list.includes(v))
+                {
             const marker = new google.maps.Marker({
                 position: { lat: position.latitude, lng: position.longitude },
                 map: map
@@ -139,8 +175,10 @@
                 const information = data.informations[i];
                 i++;
             markers.push(marker); // 将标记加入数组
-            });
-            })
+           
+            
+            }v+=1;});
+        });})
             .catch(error => {
             console.error("Error:", error);
             });
@@ -165,7 +203,7 @@
             // 假设数据是一个数组，每个元素都是包含需要显示的字段的对象
             // 在这里，我们假设有一个id为 "result-container" 的 HTML 元素作为显示结果的容器
             const positions = data.positions;
-            const resultContainer = document.getElementById("result-container");
+            const resultContainer = document.getElementById("member_content");
             resultContainer.innerHTML = ""; // 清空容器内容
 
             // 遍历数据并将其显示在网页上
@@ -219,15 +257,7 @@
         });
         var searchService = new google.maps.places.PlacesService(map);
 
-        document.getElementById('locate-btn').addEventListener('click', function() {
-            if (navigator.geolocation) {
-            // 獲取地理位置
-            navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-            } else {
-            // 瀏覽器不支援地理位置API
-            alert('瀏覽器不支援地理位置功能');
-            }
-        });
+    
 
         function successCallback(position) {
             var latitude = position.coords.latitude; // 緯度
@@ -284,10 +314,10 @@
             <div id="member_title"></div>
             <div id="member_func">
                 <button class="search_button">最愛地點</button>
-                <button class="search_button">新增地點</button>
+                
             </div>
             <div id="information-list"></div>
-            <div id="member_content">fdsfdssdgdfhdfghdfghfghfghfghdfghdfgoifdfsdfdsfdsfdsfsdfsdfdsfsdfsdfhudfsighjsdughdfsuigdfhsuigsdfhgudfisghdfuighfdugsegursheiurghsdiufgfhndujigdfhngdfikgrehusghnsdruigf</div>
+            <div id="member_content"></div>
         </div>
     </div>
     <div style="height: 2000px;"></div>

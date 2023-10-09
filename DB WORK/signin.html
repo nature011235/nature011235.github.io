@@ -54,6 +54,7 @@
             // 在這裡處理後端返回的回應
                 let obj = JSON.parse(response);
                 let account_correct=obj.isLogin;
+                console.log(account_correct)
                 if(!account_correct){
                     const error_msg=document.getElementById("error_msg")
                     error_msg.innerText="X 帳號或密碼輸入錯誤"

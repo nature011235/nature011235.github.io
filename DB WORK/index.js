@@ -80,6 +80,21 @@ logout.addEventListener("click",function(event){
   window.location.href="index.html"
 })
 
+const member_href=document.getElementById("member_href")
+member_href.addEventListener("click",function(event){
+  event.preventDefault();
+  if(username==""|| username=="null"||username==null){
+    alert("請先登入會員")
+  }
+  else{
+    window.location.href="member.html"
+  }
+
+
+
+
+
+})
 window.onload = function () {
   let slideIndex = 1;
   showSlide(slideIndex);

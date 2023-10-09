@@ -18,7 +18,7 @@
         <div class="header_items">
             <ul class="drop-down-menu"> 
                 <li><a href="aboutus.html" class="hrefitem">關於我們</a></li>
-                <li><a href="member.html" class="hrefitem">會員專區</a></li>
+                <li><a id="member_href" href="member.html" class="hrefitem">會員專區</a></li>
                 <li id="usernameloclist"><a href="signin.html" class="hrefitem" id="usernameloc">會員登入</a>
                     <ul class="innerlist">
                         <li><a id="logout" class="hrefitem" href="index.html">登出</a></li>
@@ -32,27 +32,27 @@
     <div class="picdiv">
         <div class="slideshow">
             <div class="slide__item fades">
-                <div class="slide__pagenumber">1 / 4</div>
+                <div class="slide__pagenumber">1 / 6</div>
                 <img src="https://images.unsplash.com/photo-1619771914272-e3c1ba17ba4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" />
             </div>
             <div class="slide__item fades">
-                <div class="slide__pagenumber">2 / 4</div>
+                <div class="slide__pagenumber">2 / 6</div>
                 <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" />
             </div>
             <div class="slide__item fades">
-                <div class="slide__pagenumber">3 / 4</div>
+                <div class="slide__pagenumber">3 / 6</div>
                 <img src="https://images.unsplash.com/photo-1466196390423-fe0b175e30fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1039&q=80" />            
             </div>
             <div class="slide__item fades">
-                <div class="slide__pagenumber">4 / 4</div>
+                <div class="slide__pagenumber">4 / 6</div>
                 <img src="https://plus.unsplash.com/premium_photo-1661963005592-182d602c6a3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" />
             </div>
             <div class="slide__item fades">
-                <div class="slide__pagenumber">5 / 5</div>
+                <div class="slide__pagenumber">5 / 6</div>
                 <img src="ghost.png" />
             </div>
             <div class="slide__item fades">
-                <div class="slide__pagenumber">5 / 5</div>
+                <div class="slide__pagenumber">6 / 6</div>
                 <img src="ghost1.png" />
             </div>
             <a id="prev" class="slide__arraw slide__arraw--prev"> ❮ </a>
@@ -62,8 +62,8 @@
                 <div class="dot" data-value="2"></div>
                 <div class="dot" data-value="3"></div>
                 <div class="dot" data-value="4"></div>
-                <div class="dot" data-value="4"></div>
-                <div class="dot" data-value="4"></div>
+                <div class="dot" data-value="5"></div>
+                <div class="dot" data-value="6"></div>
             </div>
         </div>
     </div>
@@ -78,6 +78,7 @@
         var markers = [];
         var map;
         var i = 0;
+        
         function getDataWithInput(table) {
             var input1 = document.getElementById('County').value;
             var input2 = document.getElementById('district').value;
@@ -99,30 +100,73 @@
             const positions = data.positions;
             const resultContainer = document.getElementById("result-container");
             resultContainer.innerHTML = ""; // 清空容器内容
+            let member_favlist;
+            var fav = {
+                    "url": "http://127.0.0.1:5000/selectfavorite?email="+username,
+                    "method": "POST",
+                    "timeout": 0,
+                    };
 
-            // 遍历数据并将其显示在网页上
-            data.informations.forEach(item => {
+                    $.ajax(fav).done(function (response) {
+                      
+                        let obj=JSON.parse(response)
+                        member_favlist=obj.isSelectFavorite;
+                        console.log(member_favlist)
+                data.informations.forEach(item => {
                 const listItem = document.createElement("li");
                 
                 const checkbox = document.createElement("input");
+                let locid=item.id
 			    checkbox.type = "checkbox";
                 listItem.appendChild(checkbox);
+                if (member_favlist.includes(locid)) {
+                    checkbox.checked = true;
+                } 
                 const value = Object.values(item).join(', '); // 将对象的值组合成字符串
                 checkbox.addEventListener("change", function() {
-
-                    if (this.checked) {
-                        
-                        let parentvalue=value;
-                        textarea.innerText="勾選"+value
-                        console.log(item)
-
-                    } else {
-                        textarea.innerText="取消勾選"+value
+                    
+                    if(username==""|| username=="null"||username==null){
+                        alert("請先登入會員")
+                        checkbox.checked=false;
                     }
+                    else{
+                        if (this.checked) {
+                            
+                            
+                            
+                            var settings = {
+                            "url": "http://127.0.0.1:5000/addfavorite?email="+username+"&placeId="+locid,
+                            "method": "POST",
+                            "timeout": 0,
+                            };
+
+                            $.ajax(settings).done(function (response) {
+                            console.log(response);
+                            });
+                        
+
+                        } else {
+                            let locid=item.id
+                            var settings = {
+                            "url": "http://127.0.0.1:5000/deletefavorite?email="+username+"&placeId="+locid,
+                            "method": "POST",
+                            "timeout": 0,
+                            };
+
+                            $.ajax(settings).done(function (response) {
+                            console.log(response);
+                            });
+                        
+                            
+                    }}
                 });
                 listItem.appendChild(document.createTextNode(value));
                 resultContainer.appendChild(listItem);
             });
+
+                    });
+                    console.log(member_favlist)
+            // 遍历数据并将其显示在网页上
 
             markers.forEach(marker => marker.setMap(null));
             markers.length = 0;
@@ -302,7 +346,7 @@
                     <button id="locate-btn">定位</button>
                 </div>
                 <div id="information-list"></div>
-                <div id="result-container">fdsfdssdgdfhdfghdfghfghfghfghdfghdfgoifdfsdfdsfdsfdsfsdfsdfdsfsdfsdfhudfsighjsdughdfsuigdfhsuigsdfhgudfisghdfuighfdugsegursheiurghsdiufgfhndujigdfhngdfikgrehusghnsdruigf</div>
+                <div id="result-container"></div>
             </div>
     </div>
     <div style="height: 200px;"></div>
